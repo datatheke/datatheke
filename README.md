@@ -18,7 +18,7 @@ REQUIREMENTS
 INSTALL
 -------
 ```sh
-git clone https://gitlab.com/iamluc/datatheke.git
+git clone https://github.com/datatheke/datatheke.git
 cd datatheke
 composer install
 
