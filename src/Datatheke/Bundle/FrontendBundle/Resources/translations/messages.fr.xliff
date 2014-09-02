@@ -1,0 +1,519 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="1">
+                <source>No collection</source>
+                <target>Aucune collection</target>
+            </trans-unit>
+            <trans-unit id="2">
+                <source>New collection</source>
+                <target>Nouvelle collection</target>
+            </trans-unit>
+            <trans-unit id="3">
+                <source>Import a collection from a file</source>
+                <target>Importer une collection depuis un fichier</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>You don't have any collection. Click on the button above to start.</source>
+                <target>Vous n'avez pas encore créer de collection. Cliquez sur le bouton ci-dessus pour commencer.</target>
+            </trans-unit>
+            <trans-unit id="5">
+                <source>Edit collection</source>
+                <target>Modifier la collection</target>
+            </trans-unit>
+            <trans-unit id="6">
+                <source>Write</source>
+                <target>Ecriture</target>
+            </trans-unit>
+            <trans-unit id="7">
+                <source>Administrate (Create/edit collections)</source>
+                <target>Administration (Création/modification des collections)</target>
+            </trans-unit>
+            <trans-unit id="8">
+                <source>Edit library</source>
+                <target>Modifier la bibliothèque</target>
+            </trans-unit>
+            <trans-unit id="9">
+                <source>New library</source>
+                <target>Nouvelle bibliothèque</target>
+            </trans-unit>
+            <trans-unit id="10">
+                <source>Your libraries</source>
+                <target>Vos bibliothèques</target>
+            </trans-unit>
+            <trans-unit id="11">
+                <source>%username%'s libraries</source>
+                <target>Les bibliothèques de %username%</target>
+            </trans-unit>
+            <trans-unit id="12">
+                <source>Shared with me</source>
+                <target>Partagées avec moi</target>
+            </trans-unit>
+            <trans-unit id="13">
+                <source>Characteristics</source>
+                <target>Caractéristiques</target>
+            </trans-unit>
+            <trans-unit id="14">
+                <source>Share</source>
+                <target>Partager</target>
+            </trans-unit>
+            <trans-unit id="15">
+                <source>Options</source>
+                <target>Options</target>
+            </trans-unit>
+            <trans-unit id="16">
+                <source>Personal access</source>
+                <target>Droits spécifiques</target>
+            </trans-unit>
+            <trans-unit id="17">
+                <source>Add user...</source>
+                <target>Ajouter un utilisateur...</target>
+            </trans-unit>
+            <trans-unit id="18">
+                <source>Save</source>
+                <target>Enregistrer</target>
+            </trans-unit>
+            <trans-unit id="19">
+                <source>Cancel</source>
+                <target>Annuler</target>
+            </trans-unit>
+            <trans-unit id="20">
+                <source>Are you sure ?</source>
+                <target>Etes-vous sûr ?</target>
+            </trans-unit>
+            <trans-unit id="21">
+                <source>New item</source>
+                <target>Nouvel enregistrement</target>
+            </trans-unit>
+            <trans-unit id="22">
+                <source>%nb% item(s)</source>
+                <target>%nb% enregistrement(s)</target>
+            </trans-unit>
+            <trans-unit id="23">
+                <source>Import data from a file</source>
+                <target>Importer des données depuis un fichier</target>
+            </trans-unit>
+            <trans-unit id="24">
+                <source>Items per page</source>
+                <target>Enregistrements par page</target>
+            </trans-unit>
+            <trans-unit id="25">
+                <source>Export</source>
+                <target>Exporter</target>
+            </trans-unit>
+            <trans-unit id="26">
+                <source>Edit</source>
+                <target>Editer</target>
+            </trans-unit>
+            <trans-unit id="27">
+                <source>Remove</source>
+                <target>Supprimer</target>
+            </trans-unit>
+            <trans-unit id="28">
+                <source>See</source>
+                <target>Voir</target>
+            </trans-unit>
+            <trans-unit id="29">
+                <source>Do you really want to remove this item ?</source>
+                <target>Voulez-vous vraiment supprimer cet élément ?</target>
+            </trans-unit>
+            <trans-unit id="30">
+                <source>No item</source>
+                <target>Aucun enregistrement</target>
+            </trans-unit>
+            <trans-unit id="31">
+                <source>Information</source>
+                <target>Information</target>
+            </trans-unit>
+            <trans-unit id="32">
+                <source>To start, click on the button above</source>
+                <target>Pour créer un enregistrement, cliquez sur le bouton ci-dessus</target>
+            </trans-unit>
+            <trans-unit id="33">
+                <source>Back to the collection</source>
+                <target>Retour à la collection</target>
+            </trans-unit>
+            <trans-unit id="34">
+                <source>Previous</source>
+                <target>Précédent</target>
+            </trans-unit>
+            <trans-unit id="35">
+                <source>Next</source>
+                <target>Suivant</target>
+            </trans-unit>
+            <trans-unit id="36">
+                <source>Loading...</source>
+                <target>Chargement en cours...</target>
+            </trans-unit>
+            <trans-unit id="37">
+                <source>Add</source>
+                <target>Ajouter</target>
+            </trans-unit>
+            <trans-unit id="38">
+                <source>Language</source>
+                <target>Langue</target>
+            </trans-unit>
+            <trans-unit id="39">
+                <source>Sign out</source>
+                <target>Déconnexion</target>
+            </trans-unit>
+            <trans-unit id="40">
+                <source>Sign in</source>
+                <target>M'identifier</target>
+            </trans-unit>
+            <trans-unit id="41">
+                <source>Sign up</source>
+                <target>Créer un compte</target>
+            </trans-unit>
+            <trans-unit id="42">
+                <source>Search...</source>
+                <target>Rechercher...</target>
+            </trans-unit>
+            <trans-unit id="43">
+                <source>Contact us</source>
+                <target>Contactez-nous</target>
+            </trans-unit>
+            <trans-unit id="44">
+                <source>FAQ</source>
+                <target>FAQ</target>
+            </trans-unit>
+            <trans-unit id="45">
+                <source>Blog</source>
+                <target>Blog</target>
+            </trans-unit>
+            <trans-unit id="46">
+                <source>Exemples</source>
+                <target>Exemples</target>
+            </trans-unit>
+            <trans-unit id="47">
+                <source>Collaborative libraries</source>
+                <target>Bibliothèques collaboratives</target>
+            </trans-unit>
+            <trans-unit id="48">
+                <source>Collaborative libraries</source>
+                <target>Bibliothèques collaboratives</target>
+            </trans-unit>
+            <trans-unit id="49">
+                <source>Developers / API</source>
+                <target>Developpeurs / API</target>
+            </trans-unit>
+            <trans-unit id="50">
+                <source>Search</source>
+                <target>Recherche</target>
+            </trans-unit>
+            <trans-unit id="51">
+                <source>Results</source>
+                <target>Résultats</target>
+            </trans-unit>
+            <trans-unit id="52">
+                <source>See more</source>
+                <target>Voir plus</target>
+            </trans-unit>
+            <trans-unit id="53">
+                <source>Read documentation</source>
+                <target>Consulter la documentation</target>
+            </trans-unit>
+            <trans-unit id="54">
+                <source>Fields</source>
+                <target>Champs</target>
+            </trans-unit>
+            <trans-unit id="55">
+                <source>Simple fields</source>
+                <target>Champs simples</target>
+            </trans-unit>
+            <trans-unit id="56">
+                <source>Text</source>
+                <target>Texte</target>
+            </trans-unit>
+            <trans-unit id="57">
+                <source>Text area</source>
+                <target>Zone de texte</target>
+            </trans-unit>
+            <trans-unit id="58">
+                <source>Date</source>
+                <target>Date</target>
+            </trans-unit>
+            <trans-unit id="59">
+                <source>Collections</source>
+                <target>Collections</target>
+            </trans-unit>
+            <trans-unit id="60">
+                <source>Collection</source>
+                <target>Collection</target>
+            </trans-unit>
+            <trans-unit id="61">
+                <source>Add fields to your collection</source>
+                <target>Ajoutez des champs à votre collection</target>
+            </trans-unit>
+            <trans-unit id="62">
+                <source>Name</source>
+                <target>Nom</target>
+            </trans-unit>
+            <trans-unit id="63">
+                <source>Multiple</source>
+                <target>Multiple</target>
+            </trans-unit>
+            <trans-unit id="64">
+                <source>New field</source>
+                <target>Nouveau champ</target>
+            </trans-unit>
+            <trans-unit id="65">
+                <source>Wiki</source>
+                <target>Wiki</target>
+            </trans-unit>
+            <trans-unit id="66">
+                <source>Forum</source>
+                <target>Forum</target>
+            </trans-unit>
+            <trans-unit id="67">
+                <source>Public read only access</source>
+                <target>Accès public en lecture seule</target>
+            </trans-unit>
+            <trans-unit id="68">
+                <source>Full REST API</source>
+                <target>API REST complète</target>
+            </trans-unit>
+            <trans-unit id="69">
+                <source>Authentification</source>
+                <target>Authentification</target>
+            </trans-unit>
+            <trans-unit id="70">
+                <source>Maps</source>
+                <target>Cartes</target>
+            </trans-unit>
+            <trans-unit id="71">
+                <source>Charts</source>
+                <target>Graphiques</target>
+            </trans-unit>
+            <trans-unit id="72">
+                <source>Do you really want to remove this collection ?</source>
+                <target>Voulez-vous vraiment supprimer cet collection ?</target>
+            </trans-unit>
+            <trans-unit id="73">
+                <source>Do you really want to remove this library ?</source>
+                <target>Voulez-vous vraiment supprimer cet bibliothèque ?</target>
+            </trans-unit>
+            <trans-unit id="74">
+                <source>Longitude / Latitude</source>
+                <target>Longitude / Latitude</target>
+            </trans-unit>
+            <trans-unit id="75">
+                <source>There is no collection with 'Longitude / Latitude' field</source>
+                <target>Il n'y a aucune collection avec des champs 'Longitude / Latitude'</target>
+            </trans-unit>
+            <trans-unit id="76">
+                <source>No map</source>
+                <target>Aucune carte</target>
+            </trans-unit>
+            <trans-unit id="77">
+                <source>%number% librarie(s)</source>
+                <target>%number% bibliothèque(s)</target>
+            </trans-unit>
+            <trans-unit id="78">
+                <source>Profile settings</source>
+                <target>Paramètres du compte</target>
+            </trans-unit>
+            <trans-unit id="79">
+                <source>My profile</source>
+                <target>Mon profil</target>
+            </trans-unit>
+            <trans-unit id="80">
+                <source>Change password</source>
+                <target>Changer le mot de passe</target>
+            </trans-unit>
+            <trans-unit id="81">
+                <source>My account</source>
+                <target>Mon compte</target>
+            </trans-unit>
+            <trans-unit id="82">
+                <source>Edit profile</source>
+                <target>Editer mon profil</target>
+            </trans-unit>
+            <trans-unit id="83">
+                <source>Comments</source>
+                <target>Commentaires</target>
+            </trans-unit>
+            <trans-unit id="84">
+                <source>%number% comment(s)</source>
+                <target>%number% commentaire(s)</target>
+            </trans-unit>
+            <trans-unit id="85">
+                <source>Add comment</source>
+                <target>Ajouter un commentaire</target>
+            </trans-unit>
+            <trans-unit id="86">
+                <source>I have lost my password</source>
+                <target>J'ai perdu mon mot de passe</target>
+            </trans-unit>
+            <trans-unit id="87">
+                <source>You must sign in to comment this library</source>
+                <target>Vous devez être identifié pour laisser un commentaire</target>
+            </trans-unit>
+            <trans-unit id="88">
+                <source>No library</source>
+                <target>Aucune bibliothèque</target>
+            </trans-unit>
+            <trans-unit id="89">
+                <source>To create your first library, click on the button above</source>
+                <target>Pour créer votre 1ère bibliothèque, cliquez sur le bouton "Créer une bibliothèque" ci-dessus</target>
+            </trans-unit>
+            <trans-unit id="90">
+                <source>Description</source>
+                <target>Description</target>
+            </trans-unit>
+            <trans-unit id="91">
+                <source>Public</source>
+                <target>Rendre publique cette bibliothèque</target>
+            </trans-unit>
+            <trans-unit id="92">
+                <source>Collaborative</source>
+                <target>Collaborative (tout le monde pourra modifier les données)</target>
+            </trans-unit>
+            <trans-unit id="93">
+                <source>Image</source>
+                <target>Image</target>
+            </trans-unit>
+            <trans-unit id="94">
+                <source>Users</source>
+                <target>Utilisateurs</target>
+            </trans-unit>
+            <trans-unit id="95">
+                <source>Field name</source>
+                <target>Nom du champ</target>
+            </trans-unit>
+            <trans-unit id="96">
+                <source>This page does not exist, or you are not authorized to see it.</source>
+                <target>Cette page n'existe pas, ou vous n'avez pas le droit de la voir.</target>
+            </trans-unit>
+            <trans-unit id="97">
+                <source>Subject</source>
+                <target>Sujet</target>
+            </trans-unit>
+            <trans-unit id="98">
+                <source>Comment</source>
+                <target>Commentaire</target>
+            </trans-unit>
+            <trans-unit id="99">
+                <source>This user does not exist</source>
+                <target>Cet utilisateur n'existe pas</target>
+            </trans-unit>
+            <trans-unit id="100">
+                <source>Longitude</source>
+                <target>Longitude</target>
+            </trans-unit>
+            <trans-unit id="101">
+                <source>Latitude</source>
+                <target>Latitude</target>
+            </trans-unit>
+            <trans-unit id="102">
+                <source>Your account</source>
+                <target>Votre compte</target>
+            </trans-unit>
+            <trans-unit id="103">
+                <source>New user ?</source>
+                <target>Nouvel utilisateur ?</target>
+            </trans-unit>
+            <trans-unit id="104">
+                <source>Welcome %username%</source>
+                <target>Bienvenue %username%</target>
+            </trans-unit>
+            <trans-unit id="105">
+                <source>Access your account</source>
+                <target>Accèdez à votre compte en cliquant ici</target>
+            </trans-unit>
+            <trans-unit id="106">
+                <source>Start now</source>
+                <target>Commencez maintenant</target>
+            </trans-unit>
+            <trans-unit id="107">
+                <source>It's easy ! Create your library and store yours data.</source>
+                <target>C'est simple ! Créez une bibliothèque, et stockez vos données en fonction de leur type dans des collections.</target>
+            </trans-unit>
+            <trans-unit id="108">
+                <source>See ours exemples</source>
+                <target>Consultez nos exemples</target>
+            </trans-unit>
+            <trans-unit id="109">
+                <source>Try with ours collaboratives libraries</source>
+                <target>Essayez sur nos bibliothèques collaboratives</target>
+            </trans-unit>
+            <trans-unit id="110">
+                <source>%nbCollections% collections / %nbUsers% users</source>
+                <target>%nbCollections% collections / %nbUsers% utilisateurs</target>
+            </trans-unit>
+            <trans-unit id="111">
+                <source>Create collection in %library%</source>
+                <target>Créer une collection dans %library%</target>
+            </trans-unit>
+            <trans-unit id="112">
+                <source>Configuration</source>
+                <target>Configuration</target>
+            </trans-unit>
+            <trans-unit id="113">
+                <source>Name</source>
+                <target>Nom</target>
+            </trans-unit>
+            <trans-unit id="114">
+                <source>File</source>
+                <target>Fichier</target>
+            </trans-unit>
+            <trans-unit id="115">
+                <source>Ignore rows</source>
+                <target>Ignorer des lignes</target>
+            </trans-unit>
+            <trans-unit id="116">
+                <source>Ignore columns</source>
+                <target>Ignorer des colonnes</target>
+            </trans-unit>
+            <trans-unit id="117">
+                <source>Import</source>
+                <target>Importer</target>
+            </trans-unit>
+            <trans-unit id="118">
+                <source>Import data in %collection%</source>
+                <target>Importer des données dans %collection%</target>
+            </trans-unit>
+            <trans-unit id="119">
+                <source>Columns</source>
+                <target>Colonnes</target>
+            </trans-unit>
+            <trans-unit id="120">
+                <source>Column %column%</source>
+                <target>Colonne %column%</target>
+            </trans-unit>
+            <trans-unit id="121">
+                <source>Check configuration</source>
+                <target>Vérifier la configuration</target>
+            </trans-unit>
+            <trans-unit id="122">
+                <source>Publishers</source>
+                <target>Fournisseurs de données</target>
+            </trans-unit>
+            <trans-unit id="123">
+                <source>producers.presentation</source>
+                <target>Datatheque est un service de stockage de données structurées en ligne simple, et collaboratif.
+                Mettez en ligne vos données facilement, organisez-les, partagez-les.
+
+                Vos données peuvent être privées, partagées avec vos collaborateurs ou publiques.</target>
+            </trans-unit>
+            <trans-unit id="124">
+                <source>Developers</source>
+                <target>Développeurs</target>
+            </trans-unit>
+            <trans-unit id="125">
+                <source>developers.presentation</source>
+                <target>Utilisez Datatheke pour concevoir vos applications.
+                Grâce à nos API, vous pourrez exploiter directement des dizaines de jeux de données.</target>
+            </trans-unit>
+            <trans-unit id="126">
+                <source>Individuals</source>
+                <target>Particuliers</target>
+            </trans-unit>
+            <trans-unit id="127">
+                <source>individuals.presentation</source>
+                <target>Trouvez des données qui vous intéresse, complétez les, diffusez les</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

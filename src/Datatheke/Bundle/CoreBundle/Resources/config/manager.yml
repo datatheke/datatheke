@@ -1,0 +1,27 @@
+parameters:
+    datatheke.manager.user.class: Datatheke\Bundle\CoreBundle\Manager\UserManager
+    datatheke.manager.library.class: Datatheke\Bundle\CoreBundle\Manager\LibraryManager
+    datatheke.manager.collection.class: Datatheke\Bundle\CoreBundle\Manager\CollectionManager
+    datatheke.manager.item.class: Datatheke\Bundle\CoreBundle\Manager\ItemManager
+    datatheke.manager.comment.class: Datatheke\Bundle\CoreBundle\Manager\CommentManager
+
+services:
+    datatheke.manager.user:
+        class: %datatheke.manager.user.class%
+        arguments: [@security.context, @doctrine.odm.mongodb.document_manager, @fos_user.user_manager]
+
+    datatheke.manager.library:
+        class: %datatheke.manager.library.class%
+        arguments: [@security.context, @doctrine.odm.mongodb.document_manager]
+
+    datatheke.manager.collection:
+        class: %datatheke.manager.collection.class%
+        arguments: [@security.context, @doctrine.odm.mongodb.document_manager, @datatheke.manager.library]
+
+    datatheke.manager.item:
+        class: %datatheke.manager.item.class%
+        arguments: [@doctrine.odm.mongodb.document_manager, @datatheke.datagrid]
+
+    datatheke.manager.comment:
+        class: %datatheke.manager.comment.class%
+        arguments: [@doctrine.odm.mongodb.document_manager]

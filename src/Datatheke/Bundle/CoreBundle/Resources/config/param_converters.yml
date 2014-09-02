@@ -1,0 +1,23 @@
+parameters:
+    datatheke.param_converter.collection.class: Datatheke\Bundle\CoreBundle\Request\ParamConverter\CollectionParamConverter
+    datatheke.param_converter.library.class: Datatheke\Bundle\CoreBundle\Request\ParamConverter\LibraryParamConverter
+    datatheke.param_converter.user.class: Datatheke\Bundle\CoreBundle\Request\ParamConverter\UserParamConverter
+
+services:
+    datatheke.param_converter.collection:
+        class: %datatheke.param_converter.collection.class%
+        arguments: [@datatheke.manager.collection]
+        tags:
+            - { name: request.param_converter, alias: datatheke_collection, param: -1 }
+
+    datatheke.param_converter.library:
+        class: %datatheke.param_converter.library.class%
+        arguments: [@datatheke.manager.library]
+        tags:
+            - { name: request.param_converter, alias: datatheke_library, param: -1 }
+
+    datatheke.param_converter.user:
+        class: %datatheke.param_converter.user.class%
+        arguments: [@datatheke.manager.user]
+        tags:
+            - { name: request.param_converter, alias: datatheke_library, param: -1 }

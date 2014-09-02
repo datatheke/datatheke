@@ -1,0 +1,21 @@
+{
+  "name": "FrontendBundle",
+  "version": "0.0.0",
+
+  "dependencies": {
+    "jquery": "~1.9.0",
+    "jquery-ui": "~1.11.0",
+    "bootstrap": "~3.2",
+    "datatables": "~1.9",
+    "jgrowl": "~1.2",
+    "jqgrid": "~4.4",
+    "openlayers": "~2.13",
+    "google-code-prettify": "~1.0",
+    "select2": "~3.2",
+    "typeahead.js": "~0.10",
+    "putsch": "0.1.0"
+  },
+  "resolutions": {
+    "jquery": "~1.9"
+  }
+}

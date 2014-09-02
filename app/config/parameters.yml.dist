@@ -1,0 +1,21 @@
+parameters:
+    locale: en
+    secret: ThisTokenIsNotSoSecretChangeIt
+
+    mailer_transport: smtp
+    mailer_host:      127.0.0.1
+    mailer_user:      null
+    mailer_password:  null
+
+    mongodb_server:   "mongodb://localhost:27017"
+    mongodb_database: datatheke
+
+    storage_path: /tmp/datatheke
+    import_path:  %storage_path%/import
+    upload_path:  %storage_path%/uploads
+
+    contact_email: 'contact@my-domain.com'
+    collection_faq: ~
+    collection_blog: ~
+    account_exemples: ~
+    account_try: ~

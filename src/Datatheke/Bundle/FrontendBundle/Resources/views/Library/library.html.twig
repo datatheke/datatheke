@@ -1,0 +1,71 @@
+
+{% extends 'DatathekeFrontendBundle::layout.html.twig' %}
+
+{% import 'DatathekeFrontendBundle::macros.html.twig' as m_lib %}
+
+{% set isOwner  = is_granted('LIBRARY_OWNER', library) %}
+{% set isAdmin  = is_granted('LIBRARY_ADMIN', library) %}
+{% set isWriter = is_granted('LIBRARY_WRITER', library) %}
+
+{% block title %}
+    {{ parent() }} - {{ library.name }}
+{% endblock %}
+
+{% block content %}
+
+    {# HEADER #}
+
+    <ul class="breadcrumb">
+        <li>
+            <span class="glyphicon glyphicon-home"></span>
+            <a href="{{ path('account', {'username': library.owner.username}) }}"> {{ library.owner.username }}</a>
+        </li>
+        <li class="active">
+            <a href="{{ path('library', {'id': library.id}) }}">
+                {{ m_lib.library_image(library, '24') }} {{ library.name }}
+            </a>
+        </li>
+    </ul>
+
+    {# DESCRIPTION #}
+
+    <div class="well well-small dt-well-library">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="dt-collapsable dt-collapsed" id="library-description">
+                        {{ library.description|default(library.name)|nl2br }}
+                    </div>
+                    <div class="dt-collapsed-more">
+                        <a href="#" title="{{ "See more"|trans }}" class="dt-tooltip" data-placement="top"><span id="library-description-expand" class="glyphicon glyphicon-chevron-down"></span></a>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    {% if isOwner %}
+                        <div class="btn-group pull-right">
+                            <a class="btn btn-default" href="{{ path('library_edit', {'id': library.id}) }}">
+                                <span class="glyphicon glyphicon-wrench"></span> {{ "Edit library"|trans }}
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# SECTIONS #}
+
+    <div class="navbar navbar-default">
+        <div class="container-fluid">
+            <ul class="nav navbar-nav">
+                <li {% if 'collections' == section %}class="active"{% endif %}><a href="{{ path('library_collections', {'id': library.id}) }}">{{ "Collections"|trans }}</a></li>
+                <li {% if 'maps' == section %}class="active"{% endif %}><a href="{{ path('library_maps', {'id': library.id}) }}">{{ "Maps"|trans }}</a></li>
+                <li {% if 'comments' == section %}class="active"{% endif %}><a href="{{ path('library_comments', {'id': library.id}) }}">{{ "Comments"|trans }}</a></li>
+            </ul>
+        </div>
+    </div>
+
+    {% block section %}{% endblock %}
+
+{% endblock %}

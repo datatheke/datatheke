@@ -1,0 +1,101 @@
+{% extends "DatathekeFrontendBundle::layout.html.twig" %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class=" alert alert-warning height-mini">
+                <h4>
+                    {% if is_granted('ROLE_USER') %}
+                        {{ "Your account"|trans }}
+                    {% else %}
+                        {{ "New user ?"|trans }}
+                    {% endif %}
+                </h4>
+                <br />
+                {% if is_granted('ROLE_USER') %}
+                    {{ "Welcome %username%"|trans({'%username%': app.user.username}) }}
+                    <br />
+                    <a href="{{ path('account', {username: app.user.username}) }}">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                        {{ "Access your account"|trans }}
+                    </a>
+                {% else %}
+                    <a href="{{ path('fos_user_security_login') }}"><span class="glyphicon glyphicon-chevron-right"></span> {{ "Sign in"|trans }}</a>
+                    <br />
+                    <a href="{{ path('fos_user_registration_register') }}"><span class="glyphicon glyphicon-chevron-right"></span> {{ "Sign up"|trans }}</a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="alert alert-custom height-mini">
+                <h4>{{ "Start now"|trans }}</h4>
+                <br />
+                {{ "It's easy ! Create your library and store yours data."|trans }}
+                <br /><br />
+                {% if account_exemples is defined and account_exemples %}
+                    <a href="{{ path('account', {username: account_exemples}) }}"><span class="glyphicon glyphicon-chevron-right"></span> {{ "See ours exemples"|trans }}</a>
+                    <br />
+                {% endif %}
+                {% if account_try is defined and account_try %}
+                    <a href="{{ path('account', {username: account_try}) }}"><span class="glyphicon glyphicon-chevron-right"></span> {{ "Try with ours collaboratives libraries"|trans }}</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+    	<div class="col-md-4">
+            <div class="alert alert-info height-medium">
+                <h4>{{ "Publishers"|trans }}</h4>
+                {{ "producers.presentation"|trans|nl2br }}
+            </div>
+        </div>
+    	<div class="col-md-4">
+            <div class="alert alert-success height-medium">
+                <h4>{{ "Developers"|trans }}</h4>
+                {{ "developers.presentation"|trans|nl2br }}
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="alert alert-danger height-medium">
+                <h4>{{ "Individuals"|trans }}</h4>
+                {{ "individuals.presentation"|trans|nl2br }}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-last">
+                <h4>{{ "%nbCollections% collections / %nbUsers% users"|trans({'%nbCollections%': nbCollections, '%nbUsers%': nbUsers}) }}</h4>
+                <br />
+
+                <div class="row">
+                    <ul class="dt-list col-md-4">
+                        {% for lib in lastLibraries %}
+                            <li>
+                                <span>
+                                    <i>
+                                        <a href="{{ path('account', {'username': lib.owner.username}) }}" style="color: #006E8A">
+                                            ({{ lib.owner.username }})
+                                        </a>
+                                    </i>
+                                </span>
+                                <a href="{{ path('library', {'id': lib.id}) }}">
+                                    {{ lib.name }}
+                                </a>
+                            </li>
+
+                            {% if loop.index is divisibleby(10) %}
+                                </ul>
+                                <ul class="dt-list col-md-4">
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

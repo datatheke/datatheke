@@ -1,0 +1,6 @@
+imports:
+    - { resource: manager.yml }
+    - { resource: form.yml }
+    - { resource: security.yml }
+    - { resource: param_converters.yml }
+    - { resource: doctrine.yml }

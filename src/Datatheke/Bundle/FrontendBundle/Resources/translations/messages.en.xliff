@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="1">
+                <source>producers.presentation</source>
+                <target>Publish your data on datatheke</target>
+            </trans-unit>
+            <trans-unit id="2">
+                <source>developers.presentation</source>
+                <target>Use our API to enrich your application with new data</target>
+            </trans-unit>
+            <trans-unit id="3">
+                <source>individuals.presentation</source>
+                <target>Find data, update them, share them</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

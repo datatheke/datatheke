@@ -1,0 +1,41 @@
+{% extends "DatathekeFrontendBundle::layout.html.twig" %}
+
+{% import 'DatathekeFrontendBundle::macros.html.twig' as m_lib %}
+
+{% block content %}
+
+    {# HEADER #}
+
+    <ul class="breadcrumb">
+	    <li><span class="glyphicon glyphicon-home"></span><a href="{{ path('account', {'username': library.owner.username}) }}"> {{ library.owner.username }}</a></li>
+	    <li class="active"><a href="{{ path('library', {'id': library.id}) }}">{{ m_lib.library_image(library, '24') }} {{ library.name }}</a></li>
+    </ul>
+
+    <h3>{{ "Create collection in %library%"|trans({'%library%': library.name}) }}</h3>
+
+    <form method="post" enctype="multipart/form-data" action="{{ path('collection_import', {'id': library.id}) }}">
+
+        <fieldset>
+            <legend>{{ "Configuration"|trans }}</legend>
+
+            <div class="form-group">
+                <label>{{ "Name"|trans }}</label>
+                <input class="form-control" type="text" name="collectionName" />
+            </div>
+            <div class="form-group">
+                <label>{{ "File"|trans }}</label>
+                <input class="form-control" type="file" name="importFile" />
+            </div>
+            <div class="form-group">
+                <label>{{ "Ignore rows"|trans }}</label>
+                <input class="form-control" type="text" name="ignoreRows" value="{{ ignoreRows }}" />
+            </div>
+            <div class="form-group">
+                <label>{{ "Ignore columns"|trans }}</label>
+                <input class="form-control" type="text" name="ignoreColumns" value="{{ ignoreColumns }}" />
+            </div>
+
+            <button class="btn btn-primary" type="submit">{{ "Import"|trans }}</button>
+        </fieldset>
+    </form>
+{% endblock %}

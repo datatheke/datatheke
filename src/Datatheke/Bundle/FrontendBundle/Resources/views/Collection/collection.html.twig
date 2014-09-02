@@ -1,0 +1,142 @@
+
+{% decorate 'datatheke.decorator.collection' with {'collection': collection} %}
+
+{% import 'DatathekePagerBundle:Pager:bootstrap3.html.twig' as m_pager %}
+
+{% set isAdmin  = is_granted('LIBRARY_ADMIN', collection.library) %}
+{% set isWriter = is_granted('LIBRARY_WRITER', collection.library) %}
+
+{% set pager = datagrid.pager %}
+
+{% block collection %}
+
+    <form action="{{ pager_form_path(pager) }}" method="post">
+
+        <div class="btn-toolbar" style="margin: 10px 0px">
+
+            <div class="btn-group">
+                {% if isWriter %}
+                    <a class="btn btn-default dt-target-outside" href="{{ path('item_add', {id: collection.id}) }}">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        {{ "New item"|trans }}
+                    </a>
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dt-target-outside" href="{{ path('item_import', {id: collection.id}) }}">
+                                <span class="glyphicon glyphicon-download-alt"></span>
+                                {{ "Import data from a file"|trans }}
+                            </a>
+                        </li>
+                    </ul>
+                {% endif %}
+            </div>
+
+            <div class="btn-group pull-right">
+                {% if isAdmin %}
+                    <a class="btn btn-default dt-tooltip dt-target-outside" href="{{ path('collection_edit', {id: collection.id}) }}" data-placement="top" title="{{ "Edit collection"|trans }}">
+                    	<span class="glyphicon glyphicon-wrench"></span>
+                    </a>
+                {% endif %}
+
+                <a class="btn btn-default dt-tooltip dt-target-outside" href="{{ pager_path(pager, null, {id: collection.id}, 'item_export') }}" data-placement="top" title="{{ "Export"|trans }}">
+                	<span class="glyphicon glyphicon-file"></span>
+                </a>
+
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="btn-group pull-right">
+                {{ m_pager.itemCountPerPage(pager) }}
+            </div>
+        </div>
+
+        <div class="dt-big-table">
+
+            <table class="table table-striped table-bordered table-hover table-condensed">
+                <thead>
+                    <tr>
+                        {% for alias, column in datagrid.columns %}
+                            <th>
+                                {% if column.isSortable %}
+                                    {{ m_pager.orderBy(pager, alias, column.label) }}
+                                {% else %}
+                                    {{ column.label }}
+                                {% endif %}
+                            </th>
+                        {% endfor %}
+                        <th></th>
+                    </tr>
+                    <tr>
+                        {% for alias, column in datagrid.columns %}
+                            <th>
+                                {% if column.isFilterable %}
+                                    {{ m_pager.filter(pager, alias, column) }}
+                                {% endif %}
+                            </th>
+                        {% endfor %}
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for item in pager.items %}
+                        <tr>
+                            {% for alias, column in datagrid.columns %}
+                               <td>
+                                   {% if isWriter %}
+                                       <a class="dt-target-outside" href="{{ path('item_edit', {'id': collection.id, 'item': item.id}) }}">{{ datagrid_item(datagrid, column, item) }}</a>
+                                   {% else %}
+                                       <a class="dt-target-outside" href="{{ path('item_view', {'id': collection.id, 'item': item.id}) }}">{{ datagrid_item(datagrid, column, item) }}</a>
+                                   {% endif %}
+                               </td>
+                            {% endfor %}
+
+                            <td nowrap="nowrap" class="col-md-1" style="text-align: right;">
+                                {% if isWriter %}
+                                    <a class="btn btn-default btn-sm dt-tooltip dt-target-outside" href="{{ path('item_edit', {'id': collection.id, 'item': item.id}) }}" data-placement="top" title="{{ "Edit"|trans }}">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                    </a>
+                                    <a class="btn btn-default btn-sm dt-tooltip dt-target-outside" href="{{ path('item_delete', {'id': collection.id, 'item': item.id}) }}" onclick="return confirm('{{ "Do you really want to remove this item ?"|trans }}');" rel="nofollow" data-placement="top" title="{{ "Remove"|trans }}">
+									   <span class="glyphicon glyphicon-remove"></span>
+                                    </a>
+                                {% else %}
+                                    <a class="btn btn-default btn-sm dt-tooltip dt-target-outside" href="{{ path('item_view', {'id': collection.id, 'item': item.id}) }}" data-placement="top" title="{{ "See"|trans }}">
+                                        <span class="glyphicon glyphicon-eye-open"></span>
+                                    </a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            {% if not pager.totalItemCount %}
+                <i>{{ "No item"|trans }}</i>
+                <span class="badge badge-warning">!</span>
+
+                {% if isWriter and pager.getValue('filtersVar')['f'] is not defined %}
+                    <div class="alert alert-info" style="margin-top: 20px;">
+                        <span class="label label-info">{{ "Information"|trans }}</span>
+                        <br /><br />
+                        {{ "To start, click on the button above"|trans }}
+
+                        <a class="btn btn-default dt-tooltip dt-target-outside" href="{{ path('item_add', {id: collection.id}) }}" data-placement="top" title="{{ "New item"|trans }}">
+                            <span class="glyphicon glyphicon-plus"></span>
+                            {{ "New item"|trans }}
+                        </a>
+                    </div>
+                {% endif %}
+            {% endif %}
+
+        </div>
+
+        {{ m_pager.paginate(pager) }}
+
+        {# Allows submitting filters with 'Enter' #}
+        <button type="submit" style="position: absolute; left: -1000px"></button>
+    </form>
+
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends 'DatathekeFrontendBundle::layout.html.twig' %}
+
+{% block title %}
+    {{ parent() }} - {{ account.username }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('bundles/datathekefrontend/vendor/putsch/jquery.putsch.js') }}" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            $('.nav-tabs').putsch({type: 'bootstrap-tab', loader: datathekeLoader});
+            viewReady('#tab-{{ category }}', loadView);
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+
+    {# HEADER #}
+
+    <ul class="breadcrumb">
+	    <li class="active"><span class="glyphicon glyphicon-home"></span><a href="{{ path('account', {'username': account.username}) }}"> {{ account.username }}</a>
+    </ul>
+
+    {# TOOLBAR #}
+
+    {% if isAccountOwner %}
+        <div class="btn-toolbar">
+            <div class="btn-group">
+                <a class="btn btn-default" href="{{ path('library_add', {'username': account.username}) }}">
+                	<span class="glyphicon glyphicon-plus"></span>
+                	{{ "New library"|trans }}
+               	</a>
+            </div>
+        </div>
+    {% endif %}
+
+    {# TABS #}
+
+    <ul class="nav nav-tabs">
+        <li {% if 'account' == category %}class="active"{% endif %}>
+            <a href="{{ path('account', {'username': account.username}) }}" data-target="#tab-account" data-toggle="tab">
+                {% if isAccountOwner %}
+                    {{ "Your libraries"|trans }}
+                {% else %}
+                    {{ "%username%'s libraries"|trans({'%username%': account.username}) }}
+                {% endif %}
+            </a>
+        </li>
+
+        {% if isAccountOwner %}
+            <li {% if 'share' == category %}class="active"{% endif %}>
+                <a href="{{ path('account_shares', {'username': account.username}) }}" data-target="#tab-share" data-toggle="tab">
+                    {{ "Shared with me"|trans }}
+                </a>
+            </li>
+        {% endif %}
+
+        <li class="pull-right">
+            <img src="{{ asset('bundles/datathekefrontend/img/spinner.gif') }}" class="hide tab-spinner" />
+        </li>
+    </ul>
+
+    <div class="tab-content">
+    	<div class="tab-pane{% if 'account' == category %} active{% endif %}" id="tab-account">{% if 'account' == category %}{{ block('tab') }}{% endif %}</div>
+
+        {% if isAccountOwner %}
+            <div class="tab-pane{% if 'share' == category %} active{% endif %}" id="tab-share">{% if 'share' == category %}{{ block('tab') }}{% endif %}</div>
+        {% endif %}
+    </div>
+
+{% endblock %}

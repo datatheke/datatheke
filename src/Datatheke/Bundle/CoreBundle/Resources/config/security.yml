@@ -1,0 +1,53 @@
+parameters:
+    datatheke.security_voter.account_admin.class: Datatheke\Bundle\CoreBundle\Security\Voter\AccountAdminVoter
+    datatheke.security_voter.library_reader.class: Datatheke\Bundle\CoreBundle\Security\Voter\LibraryReaderVoter
+    datatheke.security_voter.library_writer.class: Datatheke\Bundle\CoreBundle\Security\Voter\LibraryWriterVoter
+    datatheke.security_voter.library_admin.class: Datatheke\Bundle\CoreBundle\Security\Voter\LibraryAdminVoter
+    datatheke.security_voter.library_owner.class: Datatheke\Bundle\CoreBundle\Security\Voter\LibraryOwnerVoter
+    datatheke.security_voter.collection_reader.class: Datatheke\Bundle\CoreBundle\Security\Voter\CollectionReaderVoter
+    datatheke.security_voter.collection_writer.class: Datatheke\Bundle\CoreBundle\Security\Voter\CollectionWriterVoter
+    datatheke.security_voter.collection_admin.class: Datatheke\Bundle\CoreBundle\Security\Voter\CollectionAdminVoter
+
+services:
+    datatheke.security_voter.account_admin:
+        class: %datatheke.security_voter.account_admin.class%
+        tags:
+            - { name: security.voter }
+
+    datatheke.security_voter.library_reader:
+        class: %datatheke.security_voter.library_reader.class%
+        tags:
+            - { name: security.voter }
+
+    datatheke.security_voter.library_writer:
+        class: %datatheke.security_voter.library_writer.class%
+        tags:
+            - { name: security.voter }
+
+    datatheke.security_voter.library_admin:
+        class: %datatheke.security_voter.library_admin.class%
+        tags:
+            - { name: security.voter }
+
+    datatheke.security_voter.library_owner:
+        class: %datatheke.security_voter.library_owner.class%
+        tags:
+            - { name: security.voter }
+
+    datatheke.security_voter.collection_reader:
+        class: %datatheke.security_voter.collection_reader.class%
+        arguments: [@datatheke.security_voter.library_reader]
+        tags:
+            - { name: security.voter }
+
+    datatheke.security_voter.collection_writer:
+        class: %datatheke.security_voter.collection_writer.class%
+        arguments: [@datatheke.security_voter.library_writer]
+        tags:
+            - { name: security.voter }
+
+    datatheke.security_voter.collection_admin:
+        class: %datatheke.security_voter.collection_admin.class%
+        arguments: [@datatheke.security_voter.library_admin]
+        tags:
+            - { name: security.voter }

@@ -1,0 +1,7 @@
+parameters:
+    datatheke.handler.authentication.class: Datatheke\Bundle\FrontendBundle\Security\AuthenticationSuccessHandler
+
+services:
+    datatheke.handler.authentication:
+        class: %datatheke.handler.authentication.class%
+        arguments: [@router]

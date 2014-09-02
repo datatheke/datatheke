@@ -1,0 +1,29 @@
+
+{% macro library_image(library, size) %}
+
+    {% if library.imageType %}
+        {% if library.imageIsVertical() %}
+            <img style="vertical-align: middle; height: {{ size }}px" src="{{ asset('uploads/libraries/' ~ library.id ~ '.' ~ library.imageType) }}">
+        {% else %}
+            <img style="vertical-align: middle; width: {{ size }}px" src="{{ asset('uploads/libraries/' ~ library.id ~ '.' ~ library.imageType) }}">
+        {% endif %}
+    {% else %}
+        <img style="vertical-align: middle; width: {{ size }}px" src="{{ asset('bundles/datathekefrontend/img/library_default.png') }}">
+    {% endif %}
+
+{% endmacro %}
+
+
+{% macro collection_image(collection, size) %}
+
+    {% if collection.imageType %}
+        {% if collection.imageIsVertical() %}
+            <img style="vertical-align: middle; height: {{ size }}px;" src="{{ asset('uploads/collections/' ~ collection.id ~ '.' ~ collection.imageType) }}">
+        {% else %}
+            <img style="vertical-align: middle; width: {{ size }}px" src="{{ asset('uploads/collections/' ~ collection.id ~ '.' ~ collection.imageType) }}">
+        {% endif %}
+    {% else %}
+        <img style="vertical-align: middle; width: {{ size }}px" src="{{ asset('bundles/datathekefrontend/img/collection_default.png') }}">
+    {% endif %}
+
+{% endmacro %}

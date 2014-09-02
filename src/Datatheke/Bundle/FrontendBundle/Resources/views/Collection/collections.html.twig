@@ -1,0 +1,104 @@
+{% set section = 'collections' %}
+{% set collections = collections|default({}) %}
+{% set activeCollection = activeCollection|default(null) %}
+
+{% extends 'DatathekeFrontendBundle:Library:library.html.twig' %}
+
+{% import 'DatathekePagerBundle:Pager:bootstrap3.html.twig' as m_pager %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ m_pager.stylesheets(true) }}
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('bundles/datathekefrontend/vendor/putsch/jquery.putsch.js') }}" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+
+            initLibrary();
+
+            $('.nav-tabs').putsch({type: 'bootstrap-tab', loader: datathekeLoader});
+
+            {% if activeCollection %}
+                viewReady('#tab-{{ activeCollection.id }}', loadView);
+            {% endif %}
+        });
+    </script>
+{% endblock %}
+
+
+{% block section %}
+
+    <ul class="nav nav-tabs">
+        {% if collections|length %}
+            {% for collection in collections %}
+                <li {% if collection.id == activeCollection.id %}class="active"{% endif %}>
+                    <a href="{{ path('collection', {'id': collection.id}) }}" data-target="#tab-{{ collection.id }}" data-toggle="tab"
+                        >
+                        {{ m_lib.collection_image(collection, '16') }}
+                        {{ collection.name }}
+                    </a>
+                </li>
+            {% endfor %}
+        {% else %}
+            <li class="active">
+                <a href="#" class="active" data-target="#tab-no-collection" data-toggle="tab">
+                    {{ "No collection"|trans }}
+                </a>
+            </li>
+        {% endif %}
+
+        {% if isAdmin %}
+            <li>
+                <div class="btn-group">
+                    <a href="{{ path('collection_add', {'id': library.id}) }}" class="btn btn-default">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        {{ "New collection"|trans }}
+                    </a>
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="{{ path('collection_import', {'id': library.id}) }}">
+                                <span class="glyphicon glyphicon-download-alt"></span>
+                                {{ "Import a collection from a file"|trans }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        {% endif %}
+
+        <li class="pull-right">
+            <img src="{{ asset('bundles/datathekefrontend/img/spinner.gif') }}" class="hide tab-spinner" />
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        {% if collections|length %}
+            {% for collection in collections %}
+                <div class="tab-pane{% if collection.id == activeCollection.id %} active{% endif %}" id="tab-{{ collection.id }}">
+                    {% if collection.id == activeCollection.id %}
+                        {{ block('collection') }}
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="tab-pane active alert alert-info" id="tab-no-collection">
+                <span class="badge badge-info">!</span>
+                {% if isAdmin %}
+                    {{ "You don't have any collection. Click on the button above to start."|trans }}
+                {% else %}
+                    {{ "No collection"|trans }}
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock %}

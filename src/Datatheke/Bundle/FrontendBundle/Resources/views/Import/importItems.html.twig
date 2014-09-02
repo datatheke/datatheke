@@ -1,0 +1,71 @@
+{% extends "DatathekeFrontendBundle::layout.html.twig" %}
+
+{% import 'DatathekeFrontendBundle::macros.html.twig' as m_lib %}
+
+{% block content %}
+
+    {# HEADER #}
+
+    <ul class="breadcrumb">
+	    <li><span class="glyphicon glyphicon-home"></span><a href="{{ path('account', {'username': collection.library.owner.username}) }}"> {{ collection.library.owner.username }}</a></li>
+	    <li><a href="{{ path('library', {'id': collection.library.id}) }}">{{ m_lib.library_image(collection.library, '24') }} {{ collection.library.name }}</a></li>
+	    <li class="active"><a href="{{ path('collection', {'id': collection.id}) }}">{{ m_lib.collection_image(collection, '24') }} {{ collection.name }}</a></li>
+    </ul>
+
+    <h3>{{ "Import data in %collection%"|trans({'%collection%': collection.name}) }}</h3>
+
+    <form method="post" {% if not fileId %}enctype="multipart/form-data"{% endif %} action="{{ path('item_import', {'id': collection.id}) }}">
+
+        <fieldset>
+            <legend>{{ "Configuration"|trans }}</legend>
+
+            {% if not fileId %}
+                <div class="form-group">
+                    <label>{{ "File"|trans }}</label>
+                    <input class="form-control" type="file" name="importFile" />
+                </div>
+            {% else %}
+                <input type="hidden" name="fileId" value="{{ fileId }}" />
+            {% endif %}
+            <div class="form-group">
+                <label>{{ "Ignore rows"|trans }}</label>
+                <input class="form-control" type="text" name="ignoreRows" value="{{ ignoreRows }}" />
+            </div>
+            <div class="form-group">
+                <label>{{ "Ignore columns"|trans }}</label>
+                <input class="form-control" type="text" name="ignoreColumns" value="{{ ignoreColumns }}" />
+            </div>
+
+            {% if datas %}
+
+                <h4>{{ "Columns"|trans }}</h4>
+
+                {% for key, column in datas %}
+                    <div class="form-group">
+                        <label>{{ "Column %column%"|trans({'%column%': key}) }}</label>
+                        <select name="mapping[{{ key }}]">
+                            <option value=""></option>
+                            {% for field in collection.getFields() %}
+                                <option value="{{ field.id }}" {% if field.label == column.header %}selected="selected"{% endif %}>{{ field.label }}</option>
+                            {% endfor %}
+                        </select>
+
+                        <span style="margin-left: 30px; color: red;">
+                            {{ column.value }}
+                        </span>
+                    </div>
+                {% endfor %}
+
+            {% endif %}
+
+            <div class="clearfix"></div>
+
+            {% if datas %}
+                <button class="btn btn-primary" type="submit">{{ "Import"|trans }}</button>
+            {% else %}
+                <button class="btn btn-primary" type="submit">{{ "Check configuration"|trans }}</button>
+            {% endif %}
+        </fieldset>
+    </form>
+
+{% endblock %}

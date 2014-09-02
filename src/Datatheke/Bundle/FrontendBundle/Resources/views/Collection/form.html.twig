@@ -1,0 +1,324 @@
+
+{% extends 'DatathekeFrontendBundle::layout.html.twig' %}
+
+{% import 'DatathekeFrontendBundle::macros.html.twig' as m_lib %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+
+        addWidget = function(type, collectionId, collectionName) {
+
+            var collectionHolder = $('#datatheke_collection_fields');
+            var prototype = collectionHolder.attr('data-prototype');
+
+            var id = collectionHolder.children().length;
+            var newForm = prototype.replace(/__name__/g, id);
+            newForm = newForm.replace('__CLASS_TYPE__', 'field-type-' + type);
+
+            collectionHolder.append(newForm);
+
+            $('#datatheke_collection_fields_'+id+'_type').val(type);
+            if (type != 'collection') {
+            	$('#collection-container-'+id).hide();
+            }
+            else {
+                $('#datatheke_collection_fields_'+id+'_label').val(collectionName);
+                $('#datatheke_collection_fields_'+id+'_collection').val(collectionId);
+            }
+
+            return false;
+        }
+
+    </script>
+{% endblock %}
+
+{% block content %}
+
+    {# HEADER #}
+
+    <ul class="breadcrumb">
+	    <li><span class="glyphicon glyphicon-home"></span><a href="{{ path('account', {'username': collection.library.owner.username}) }}"> {{ collection.library.owner.username }}</a> </li>
+	    <li><a href="{{ path('library', {'id': collection.library.id}) }}">{{ m_lib.library_image(collection.library, '24') }} {{ collection.library.name }}</a> </li>
+
+        {% if action == 'edit' %}
+            <li class="active"><a href="{{ path('library', {'id': collection.library.id, 'collection': collection.id}) }}">{{ m_lib.collection_image(collection, '24') }} {{ collection.name }}</a></li>
+        {% else %}
+            <li class="active">{{ "New collection"|trans }}</li>
+        {% endif %}
+    </ul>
+
+    {# TABS #}
+
+    <ul class="nav nav-tabs">
+        <li class="active">
+            <a href="#config" data-toggle="tab">{{ "Characteristics"|trans }}</a>
+        </li>
+
+        {% if action == 'edit' %}
+            <li class="pull-right">
+                <div>
+                    <a href="{{ path('collection_delete', {id: collection.id}) }}" class="btn btn-danger" onclick="return confirm('{{ "Do you really want to remove this collection ?"|trans }}');">{{ "Remove"|trans }}</a>
+                <div>
+            </li>
+        {% endif %}
+    </ul>
+
+    <div class="tab-content">
+    	<div class="tab-pane active in" id="config">
+
+            {% form_theme form _self %}
+
+            <form method="post" class="form-horizontal" {{ form_enctype(form) }}
+                {% if action == 'edit' %}
+                    action="{{ path('collection_edit', {id: collection.id}) }}"
+                {% else %}
+                    action="{{ path('collection_add', {id: collection.library.id}) }}"
+                {% endif %}
+                >
+
+                {{ form_errors(form) }}
+
+                {{ form_row(form.name, { 'attr': {'class': 'form-control'} }) }}
+                {{ form_row(form.description, { 'attr': {'class': 'form-control'} }) }}
+                {{ form_row(form.imageUpload, { 'attr': {'class': 'form-control'} }) }}
+
+                <fieldset style="margin-top: 20px;">
+                    <legend>{{ "Fields"|trans }}</legend>
+
+                    <div class="row">
+                        <div class="panel-group col-md-4" id="fields">
+
+                            <div class="panel panel-default" id="fields-catalog">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a href="#collapseSimplesFields" data-parent="#fields" data-toggle="collapse">{{ "Simple fields"|trans }}</a>
+                                    </h4>
+                                </div>
+                                <div id="collapseSimplesFields" class="panel-collapse collapse in">
+                                    <div class="panel-body">
+                                        <ul>
+                                            <li class="field-type field-type-string">
+                                                <a href="#" onclick="return addWidget('string');" style="color: #556652;">
+                                                    <div>
+                                                        {{ "Text"|trans }}
+                                                        <button type="button" class="btn btn-default btn-xs pull-right">
+                                                            <span class="glyphicon glyphicon-plus"></span>
+                                                        </button>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li class="field-type field-type-textarea">
+                                                <a href="#" onclick="return addWidget('textarea');" style="color: #556652;">
+                                                    <div>
+                                                        {{ "Text area"|trans }}
+                                                        <button type="button" class="btn btn-default btn-xs pull-right">
+                                                            <span class="glyphicon glyphicon-plus"></span>
+                                                        </button>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li class="field-type field-type-date">
+                                                <a href="#" onclick="return addWidget('date');" style="color: #556652;">
+                                                    <div>
+                                                        {{ "Date"|trans }}
+                                                        <button type="button" class="btn btn-default btn-xs pull-right">
+                                                            <span class="glyphicon glyphicon-plus"></span>
+                                                        </button>
+                                                    </div>
+                                                </a>
+                                            </li>
+
+                                            <li class="field-type field-type-coordinates">
+                                                <a href="#" onclick="return addWidget('coordinates');" style="color: #556652;">
+                                                    <div>
+                                                        {{ "Longitude / Latitude"|trans }}
+                                                        <button type="button" class="btn btn-default btn-xs pull-right">
+                                                            <span class="glyphicon glyphicon-plus"></span>
+                                                        </button>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {% if libraryCollections|length %}
+                                <div class="panel panel-default" id="fields-catalog">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a href="#collapseCollections" data-parent="#fields" data-toggle="collapse">{{ "Collections"|trans }}</a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapseCollections" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            <ul>
+                                                {% for collection in libraryCollections %}
+                                                    {% if collection.id %}
+                                                        <li class="field-type field-type-collection" id="collection-{{ collection.id }}">
+                                                            <a href="#" onclick="return addWidget('collection', '{{ collection.id }}', '{{ collection.name }}');" style="color: #556652;">
+                                                                <div>
+                                                                    {{ collection.name }}
+                                                                    <button type="button" class="btn btn-default btn-xs pull-right">
+                                                                        <span class="glyphicon glyphicon-plus"></span>
+                                                                    </button>
+                                                                </div>
+                                                            </a>
+                                                        </li>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-8" id="drop-target">
+                            <div class="alert alert-info">
+                                <span class="badge badge-info">!</span>
+                                {{ "Add fields to your collection"|trans }}
+                            </div>
+
+                            <div class="form-horizontal">
+                                {{ form_row(form.fields) }}
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                {{ form_rest(form) }}
+
+                <button type="submit" class="btn btn-primary">{{ "Save"|trans }}</button>
+
+                {% if action == 'edit' %}
+                    <a href="{{ path('collection', {'id': collection.id}) }}" class="btn btn-default">{{ "Cancel"|trans }}</a>
+                {% else %}
+                    <a href="{{ path('library', {'id': collection.library.id}) }}" class="btn btn-default">{{ "Cancel"|trans }}</a>
+                {% endif %}
+
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block datatheke_field_row %}
+    {% set field = form.vars.value %}
+
+    {% if field.id is defined and field.id %}
+
+        {# Existing fields #}
+
+        <div class="field-type field-type-{{ field.type }}">
+
+            {{ form_errors(form) }}
+            {{ form_widget(form.deleted) }}
+
+            <div class="pull-right">
+                <a href="#" onclick="$(this).closest('.field-type').hide().find('input[type=hidden]').val(1); return false;">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </a>
+            </div>
+
+            <div class="clearfix" style="padding-right: 30px;">
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{ "Name"|trans }}</label>
+                    <div class="col-sm-10">
+                        {{ form_widget(form.label, { 'attr': {'placeholder': 'New field'|trans, 'class': 'form-control' } }) }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{ "Multiple"|trans }}</label>
+                    <div class="col-sm-10">
+                        <input type="checkbox" disabled="disabled" {% if field.multiple %}checked="checked"{% endif %} />
+                    </div>
+                </div>
+
+                {% if field.type == 'collection' %}
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">{{ "Collection"|trans }}</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" value="{% if field.collection %}{{ field.collection.name }}{% endif %}" disabled="disabled" />
+                        </div>
+                    </div>
+                {% endif %}
+
+                {{ form_rest(form) }}
+            </div>
+        </div>
+
+    {% else %}
+
+        {# Prototype or new fields not completed #}
+
+        {% if form.vars.value.type is defined %}
+            {% set class = 'field-type-' ~ form.vars.value.type %}
+            {% set name = form.vars.label %}
+        {% else %}
+            {% set class = '__CLASS_TYPE__' %}
+            {% set name = '__name__' %}
+        {% endif %}
+
+        <div class="field-type {{ class }}">
+
+            <div class="pull-right">
+                <a href="#" onclick="$(this).closest('.field-type').remove(); return false;">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </a>
+            </div>
+
+            {{ form_errors(form) }}
+            {{ form_widget(form.type) }}
+
+            <div class="clearfix" style="padding-right: 30px;">
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{ "Name"|trans }}</label>
+                    <div class="col-sm-10">
+                        {{ form_widget(form.label, { 'attr': {'placeholder': 'New field'|trans, 'class': 'form-control' } }) }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{ "Multiple"|trans }}</label>
+                    <div class="col-sm-10">
+                        {{ form_widget(form.multiple) }}
+                    </div>
+                </div>
+
+                <div class="collection-container" id="collection-container-{{ name }}">
+                    <span class="collection-select">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">{{ "Collection"|trans }}</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.collection) }}
+                            </div>
+                        </div>
+                    </span>
+                </div>
+
+                {{ form_rest(form) }}
+            </div>
+        </div>
+
+    {% endif %}
+
+{% endblock %}
+
+{% block form_errors %}
+{% spaceless %}
+    {% if errors|length > 0 %}
+    <ul class="alert alert-danger">
+        {% for error in errors %}
+            <li>{{ error.message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+{% endspaceless %}
+{% endblock form_errors %}

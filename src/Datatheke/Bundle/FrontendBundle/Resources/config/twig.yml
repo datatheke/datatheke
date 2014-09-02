@@ -1,0 +1,9 @@
+parameters:
+    datatheke.twig_extension.locale.class: Datatheke\Bundle\FrontendBundle\Twig\LocaleExtension
+
+services:
+    datatheke.twig_extension.locale:
+        class: %datatheke.twig_extension.locale.class%
+        arguments: [@router, @request_stack]
+        tags:
+            - { name: twig.extension }

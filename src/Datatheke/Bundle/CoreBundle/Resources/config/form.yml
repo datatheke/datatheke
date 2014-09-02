@@ -1,0 +1,84 @@
+parameters:
+    datatheke.type.field.class: Datatheke\Bundle\CoreBundle\Form\Type\FieldType
+    datatheke.type.item.class: Datatheke\Bundle\CoreBundle\Form\Type\ItemType
+    datatheke.type.collection.class: Datatheke\Bundle\CoreBundle\Form\Type\CollectionType
+    datatheke.type.library.class: Datatheke\Bundle\CoreBundle\Form\Type\LibraryType
+    datatheke.type.share.class: Datatheke\Bundle\CoreBundle\Form\Type\ShareType
+    datatheke.type.comment.class: Datatheke\Bundle\CoreBundle\Form\Type\CommentType
+    datatheke.type.user_selector.class: Datatheke\Bundle\CoreBundle\Form\Type\UserSelectorType
+
+    datatheke.type.field_coordinates.class: Datatheke\Bundle\CoreBundle\Form\Type\FieldType\CoordinatesType
+    datatheke.type.field_date.class: Datatheke\Bundle\CoreBundle\Form\Type\FieldType\DateType
+    datatheke.type.field_string.class: Datatheke\Bundle\CoreBundle\Form\Type\FieldType\StringType
+    datatheke.type.field_textarea.class: Datatheke\Bundle\CoreBundle\Form\Type\FieldType\TextareaType
+
+    datatheke.transformer.username_to_user.class: Datatheke\Bundle\CoreBundle\Form\DataTransformer\UsernameToUserTransformer
+
+services:
+    datatheke.type.field:
+        class: %datatheke.type.field.class%
+        arguments: [@translator]
+        tags:
+            - { name: form.type, alias: datatheke_field }
+
+    datatheke.type.item:
+        class: %datatheke.type.item.class%
+        arguments: [@translator, @datatheke.manager.item]
+        tags:
+            - { name: form.type, alias: datatheke_item }
+
+    datatheke.type.collection:
+        class: %datatheke.type.collection.class%
+        arguments: [@translator]
+        tags:
+            - { name: form.type, alias: datatheke_collection }
+
+    datatheke.type.library:
+        class: %datatheke.type.library.class%
+        arguments: [@translator]
+        tags:
+            - { name: form.type, alias: datatheke_library }
+
+    datatheke.type.share:
+        class: %datatheke.type.share.class%
+        arguments: [@translator]
+        tags:
+            - { name: form.type, alias: datatheke_share }
+
+    datatheke.type.comment:
+        class: %datatheke.type.comment.class%
+        arguments: [@translator]
+        tags:
+            - { name: form.type, alias: datatheke_comment }
+
+    datatheke.type.user_selector:
+        class: %datatheke.type.user_selector.class%
+        arguments: [@translator, @datatheke.transformer.username_to_user]
+        tags:
+            - { name: form.type, alias: datatheke_user_selector }
+
+    datatheke.type.field_coordinates:
+        class: %datatheke.type.field_coordinates.class%
+        arguments: [@translator]
+        tags:
+            - { name: form.type, alias: datatheke_field_coordinates }
+
+    datatheke.type.field_date:
+        class: %datatheke.type.field_date.class%
+        arguments: [@translator]
+        tags:
+            - { name: form.type, alias: datatheke_field_date }
+
+    datatheke.type.field_string:
+        class: %datatheke.type.field_string.class%
+        tags:
+            - { name: form.type, alias: datatheke_field_string }
+
+    datatheke.type.field_textarea:
+        class: %datatheke.type.field_textarea.class%
+        tags:
+            - { name: form.type, alias: datatheke_field_textarea }
+
+    datatheke.transformer.username_to_user:
+        class: %datatheke.transformer.username_to_user.class%
+        arguments: [@datatheke.manager.user]

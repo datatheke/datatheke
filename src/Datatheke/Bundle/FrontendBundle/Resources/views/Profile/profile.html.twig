@@ -1,0 +1,40 @@
+{% extends 'DatathekeFrontendBundle::layout.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            $('body').scrollspy({ target: '#doc-nav' });
+        })
+    </script>
+{% endblock %}
+
+{% block content %}
+
+    <ul class="breadcrumb">
+        <li class="active">
+            <a href="{{ path('fos_user_profile_edit') }}"><span class="glyphicon glyphicon-user"></span> {{ "Profile settings"|trans }}</a>
+        </li>
+    </ul>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3" id="doc-nav">
+                <ul class="nav nav-list affix doc-affix" data-spy="affix" data-offset-top="50">
+                    <li {% if app.request.attributes.get('_route') == 'fos_user_profile_edit' %}class="active"{% endif %}>
+                        <a href="{{ path('fos_user_profile_edit') }}"><span class="glyphicon glyphicon-chevron-right"></span> {{ "Edit profile"|trans }}</a>
+                    </li>
+                    <li {% if app.request.attributes.get('_route') == 'fos_user_change_password' %}class="active"{% endif %}>
+                        <a href="{{ path('fos_user_change_password') }}"><span class="glyphicon glyphicon-chevron-right"></span> {{ "Change password"|trans }}</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-md-9">
+                {% block section %}{% endblock %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

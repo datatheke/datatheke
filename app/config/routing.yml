@@ -1,0 +1,57 @@
+# FOSUserBundle
+
+fos_user_security:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+    prefix:   /{_locale}
+    defaults: { _locale: %locale% }
+    requirements:
+        _locale: en|fr
+
+fos_user_profile:
+    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
+    prefix: /{_locale}/profile
+    defaults: { _locale: %locale% }
+    requirements:
+        _locale: en|fr
+
+fos_user_register:
+    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
+    prefix: /{_locale}/register
+    defaults: { _locale: %locale% }
+    requirements:
+        _locale: en|fr
+
+fos_user_resetting:
+    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
+    prefix: /{_locale}/resetting
+    defaults: { _locale: %locale% }
+    requirements:
+        _locale: en|fr
+
+fos_user_change_password:
+    resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
+    prefix: /{_locale}/profile
+    defaults: { _locale: %locale% }
+    requirements:
+        _locale: en|fr
+
+# DatathekeFrontendBundle
+
+datatheke_frontend_root:
+    pattern:   /
+    defaults: { _controller: DatathekeFrontendBundle:Home:index }
+
+datatheke_frontend:
+    resource: "@DatathekeFrontendBundle/Controller"
+    type: annotation
+    prefix:   /{_locale}
+    defaults: { _locale: %locale% }
+    requirements:
+        _locale: en|fr
+
+# DatathekeApiBundle
+
+datatheke_api:
+    resource: "@DatathekeApiBundle/Controller"
+    type: annotation
+    prefix:   /api

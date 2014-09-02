@@ -1,0 +1,9 @@
+parameters:
+    datatheke.doctrine_listener.image_upload.class: Datatheke\Bundle\CoreBundle\Document\EventListener\ImageUploadListener
+
+services:
+    datatheke.doctrine_listener.image_upload:
+        class: %datatheke.doctrine_listener.image_upload.class%
+        arguments: [%upload_path%]
+        tags:
+            - { name: doctrine_mongodb.odm.event_subscriber }

@@ -1,0 +1,61 @@
+{% import 'DatathekeFrontendBundle::macros.html.twig' as m_lib %}
+{% import 'DatathekePagerBundle:Pager:bootstrap3.html.twig' as m_pager %}
+
+<form action="{{ pager_form_path(pager) }}" method="post">
+
+    <div class="form-group">
+        <div class="btn-toolbar pull-right">
+            <input type="text" class="form-control" placeholder="{{ "Search..."|trans }}" value="{{ query }}" name="query">
+        </div>
+    </div>
+
+    <p>{{ '%number% librarie(s)'|trans({'%number%': pager.totalItemCount}) }}</p>
+
+    <div style="clear: both;"></div>
+
+    {% if pager.totalItemCount %}
+
+        <ul class="dt-list-icons">
+            {% for library in pager.items %}
+                <li>
+                    <div class="pull-left">
+                        <a href="{{ path('library', {'id': library.id}) }}" class="dt-target-outside">
+                            {{ m_lib.library_image(library, '48') }}
+                        </a>
+                    </div>
+
+                    <div style="margin-left: 80px;">
+                        {% if is_granted('LIBRARY_OWNER', library) %}
+                            <div class="pull-right">
+                                <a href="{{ path('library_edit', {'id': library.id}) }}" class="dt-target-outside">
+                                	<span class="glyphicon glyphicon-wrench"></span>
+                                </a>
+                                <a href="{{ path('library_delete', {'id': library.id}) }}" class="dt-target-outside" onclick="return confirm('{{ "Do you really want to remove this library ?"|trans }}');">
+        							<span class="glyphicon glyphicon-remove"></span>
+                                </a>
+                            </div>
+                        {% endif %}
+
+                        <a href="{{ path('library', {'id': library.id}) }}" class="dt-target-outside">
+                            <h5>{{ library.name }} {% if library.owner != app.user %}<small><i>({{ library.owner.username }})</i></small>{% endif %}</h5>
+                            <p>{{ library.description|nl2br }}</p>
+                        </a>
+                    </div>
+                </li>
+            {% endfor %}
+    	</ul>
+
+        <div style="clear: both;"></div>
+
+        {{ m_pager.paginate(pager) }}
+
+    {% else %}
+
+    	{% block no_result %}
+	        <i>{{ "No library"|trans }}</i>
+	        <span class="badge badge-warning">!</span>
+        {% endblock %}
+
+    {% endif %}
+
+</form>

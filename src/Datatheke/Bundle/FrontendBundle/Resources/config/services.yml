@@ -1,0 +1,5 @@
+imports:
+    - { resource: security.yml }
+    - { resource: locale.yml }
+    - { resource: decorator.yml }
+    - { resource: twig.yml }

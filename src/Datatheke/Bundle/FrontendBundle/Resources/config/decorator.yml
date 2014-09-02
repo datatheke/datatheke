@@ -1,0 +1,7 @@
+parameters:
+    datatheke.decorator.collection.class: Datatheke\Bundle\FrontendBundle\Decorator\CollectionDecorator
+
+services:
+    datatheke.decorator.collection:
+        class: %datatheke.decorator.collection.class%
+        arguments: [@request_stack, @datatheke.manager.collection]

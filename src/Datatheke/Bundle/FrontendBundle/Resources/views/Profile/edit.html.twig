@@ -1,0 +1,11 @@
+
+{% extends 'DatathekeFrontendBundle:Profile:profile.html.twig' %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block section %}
+    <form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="post" class="fos_user_profile_edit">
+        {{ form_widget(form) }}
+        <button class="btn btn-primary">{{ 'profile.edit.submit'|trans }}</button>
+    </form>
+{% endblock section %}

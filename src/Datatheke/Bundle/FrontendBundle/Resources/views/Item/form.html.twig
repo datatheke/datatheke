@@ -1,0 +1,297 @@
+{% set isAdmin  = is_granted('LIBRARY_ADMIN', collection.library) %}
+{% set isWriter = is_granted('LIBRARY_WRITER', collection.library) %}
+{% set linkedCollections = linkedCollections|default({}) %}
+
+{% extends 'DatathekeFrontendBundle::layout.html.twig' %}
+
+{% import 'DatathekeFrontendBundle::macros.html.twig' as m_lib %}
+{% import 'DatathekePagerBundle:Pager:bootstrap3.html.twig' as m_pager %}
+
+{% form_theme form _self %}
+
+{% block title %}
+    {{ parent() }} -
+    {% if item.id %}
+        {{ item }}
+    {% else %}
+        {{ collection.name }}
+    {% endif %}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    {{ m_pager.stylesheets(true) }}
+
+    <link href="{{ asset('bundles/datathekefrontend/vendor/select2/select2.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('bundles/datathekefrontend/vendor/select2/select2.min.js') }}" type="text/javascript"></script>
+
+    <script type="text/javascript">
+
+        var $addLink = $('<a href="#" class="add dt-tooltip" title="{{ "Add"|trans }}"><span class="glyphicon glyphicon-plus"></span></a>');
+        var $removeLink = $('<a href="#" class="remove" title="{{ "Remove"|trans }}"><span class="glyphicon glyphicon-remove"></span></a>');
+
+        addWidget = function(collectionHolder) {
+
+            var prototype = collectionHolder.attr('data-prototype');
+            var newForm = prototype.replace(/__name__/g, collectionHolder.children().length);
+
+            collectionHolder.append(newForm);
+
+            // HACK
+            $('a.remove').remove();
+            $('div.collection').find('div:first').children('div').children('div').children('div').append($removeLink);
+
+            $('a.remove').unbind('click');
+            $('a.remove').click(function(e) {
+                e.preventDefault();
+                removeWidget($(e.currentTarget));
+            });
+            //
+
+            $( "input.date" ).datepicker({ dateFormat: "dd/mm/yy" });
+        }
+
+        removeWidget = function(link) {
+            $(link).closest('div').closest('div').closest('div').remove();
+        }
+
+	    jQuery(document).ready(function() {
+
+            $('div.collection').before($addLink);
+            $('div.collection').find('div:first').children('div').children('div').children('div').append($removeLink);
+
+            $('a.add').click(function(e) {
+                e.preventDefault();
+                addWidget($(e.currentTarget).parent().find('div.collection > div:first'));
+            });
+
+            $('a.remove').click(function(e) {
+                e.preventDefault();
+                removeWidget($(e.currentTarget));
+            });
+
+			$('[data-toggle="tab-remote"]').on(
+				'click',
+				function(e) {
+				    updatePager($(this).attr('href'));
+				    $(this).tab('show');
+				    return false;
+				}
+			);
+
+            $('.dt-tooltip').tooltip();
+
+            $('input.date').datepicker({ dateFormat: "dd/mm/yy" });
+
+            $('#primary-tab select').css('min-width', '300px').select2();
+    	});
+    </script>
+
+{% endblock %}
+
+
+{% block content %}
+
+    {# HEADER #}
+
+    <ul class="breadcrumb">
+	    <li><span class="glyphicon glyphicon-home"></span><a href="{{ path('account', {'username': collection.library.owner.username}) }}"> {{ collection.library.owner.username }}</a></li>
+	    <li><a href="{{ path('library', {'id': collection.library.id}) }}">{{ m_lib.library_image(collection.library, '24') }} {{ collection.library.name }}</a></li>
+	    <li class="active"><a href="{{ path('library', {'id': collection.library.id, 'collection': collection.id}) }}">{{ m_lib.collection_image(collection, '24') }} {{ collection.name }}</a></li>
+    </ul>
+
+	<h3>
+   	    {% if item.id %}
+   			{{ item }}
+   		{% else %}
+   			{{ "New item"|trans }}
+   		{% endif %}
+	</h3>
+
+    {# TOOLBAR #}
+
+    <div class="btn-toolbar">
+	    <a class="btn btn-default" href="{{ path('collection', {'id': collection.id}) }}" data-placement="top" title="{{ "Back to the collection"|trans }}">
+	    	<span class="glyphicon glyphicon-list"></span>
+	    	{{ "Back to the collection"|trans }}
+	    </a>
+
+	    {% if isWriter or isAdmin %}
+	        <div class="btn-group">
+    	        {% if isWriter %}
+        	        {% if item.id %}
+                        <a class="btn btn-default dt-tooltip dt-target-outside" href="{{ path('item_add', {id: collection.id}) }}" data-placement="top" title="{{ "New item"|trans }}">
+                        	<span class="glyphicon glyphicon-plus"></span>
+                        </a>
+                    {% endif %}
+                    <a class="btn btn-default dt-tooltip dt-target-outside" href="{{ path('item_import', {id: collection.id}) }}" data-placement="top" title="{{ "Import data from a file"|trans }}">
+                    	<span class="glyphicon glyphicon-download-alt"></span>
+                    </a>
+                {% endif %}
+
+                {% if isAdmin %}
+                    <a class="btn btn-default dt-tooltip dt-target-outside" href="{{ path('collection_edit', {id: collection.id}) }}" data-placement="top" title="{{ "Edit collection"|trans }}">
+                    	<span class="glyphicon glyphicon-wrench"></span>
+                    </a>
+                {% endif %}
+    	    </div>
+        {% endif %}
+
+    	<div class="btn-group">
+    		{% if isWriter %}
+		        {% set route = 'item_edit' %}
+		    {% else %}
+		        {% set route = 'item_view' %}
+		    {% endif %}
+
+		    <a data-placement="top" title="{{ "Previous"|trans }}"
+                {% if not prevItem|default(null) %}class="btn btn-default dt-tooltip disabled" href="#"{% else %}class="btn btn-default dt-tooltip" href="{{ path(route, {'id': collection.id, 'item': prevItem.id}) }}"{% endif %}>
+		    	<span class="glyphicon glyphicon-chevron-left"></span>
+		    </a>
+
+		    <a data-placement="top" title="{{ "Next"|trans }}"
+                {% if not nextItem|default(null) %}class="btn btn-default dt-tooltip disabled" href="#"{% else %}class="btn btn-default dt-tooltip" href="{{ path(route, {'id': collection.id, 'item': nextItem.id}) }}"{% endif %}>
+		        <span class="glyphicon glyphicon-chevron-right"></span>
+		    </a>
+		</div>
+	</div>
+
+    {# COLLECTIONS #}
+
+    <ul class="nav nav-tabs">
+        <li class="active">
+            <a href="#primary-tab" data-toggle="tab">
+            	{{ m_lib.collection_image(collection, '16') }}
+                {{ collection.name }}
+            </a>
+        </li>
+        {% for li in linkedCollections %}
+            <li>
+                <a href="{{ path('collection_linked', {'collection': li.collection.id, 'property': li.field.id, 'item': item.id}) }}" data-target="#pager-view" data-toggle="tab-remote">
+                    {{ m_lib.collection_image(li.collection, '16') }}
+                    {{ li.collection.name }} ({{ li.field.label }})
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <div class="tab-content">
+
+    	{# FORM #}
+    	<div class="tab-pane active" id="primary-tab">
+            {% if isWriter %}
+                <form {{ form_enctype(form) }}
+                    method="post"
+                    {% if action == 'edit' %}
+                        action="{{ path('item_edit', {'id': collection.id, 'item': item.id}) }}"
+                    {% else %}
+                        action="{{ path('item_add', {'id': collection.id}) }}"
+                    {% endif %}
+                    >
+            {% endif %}
+
+            {# MESSAGES #}
+            {% for message in app.session.flashbag.get('item_success') %}
+                <div class="alert alert-success">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+            {{ form_widget(form) }}
+
+            <br />
+            {% if isWriter %}
+	                <button class="btn btn-primary" type="submit">{{ "Save"|trans }}</button>
+
+	                <a class="btn btn-default" href="{{ path('collection', {'id': collection.id}) }}">
+            	    	{{ "Cancel"|trans }}
+            	    </a>
+	            </form>
+            {% endif %}
+            <br />
+        </div>
+
+    	{# LINKED COLLECTIONS #}
+    	<div class="tab-pane" id="pager-view">
+	        <div id="pager-content">
+	            {{ "Loading..."|trans }}
+	            <img style="display: none; margin-left: 10px;" class="spinner" src="{{ asset('bundles/datathekefrontend/img/spinner.gif') }}" />
+	        </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block form_row %}
+    <div class="form-group">
+        {{ form_label(form) }}
+        <br />
+        {{ form_errors(form) }}
+        {{ form_widget(form) }}
+    </div>
+{% endblock %}
+
+{% block collection_widget %}
+{% spaceless %}
+    <div class="collection">
+        {% if prototype is defined %}
+            {% set attr = attr|merge({'data-prototype':form_row(prototype) }) %}
+        {% endif %}
+
+        {{ block('form_widget_compound') }}
+    </div>
+{% endspaceless %}
+{% endblock %}
+
+
+{% block text_widget %}
+{% spaceless %}
+    {% set type = type|default('text') %}
+    <input type="{{ type }}" class="form-control" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+{% endspaceless %}
+{% endblock %}
+
+
+{% block textarea_widget %}
+{% spaceless %}
+    <textarea  class="form-control" {{ block('widget_attributes') }}>{{ value }}</textarea>
+{% endspaceless %}
+{% endblock %}
+
+
+{% block datatheke_field_coordinates_widget %}
+{% spaceless %}
+    <div>
+        {{ form_errors(form.longitude) }}
+        {{ form_errors(form.latitude) }}
+
+        <div class="form-inline">
+            {{ form_label(form.latitude, null, {'label_attr': {'class': 'inline-label-first'}}) }}
+            {{ form_widget(form.latitude, {'attr': {'class': 'input-small'}}) }}
+            {{ form_label(form.longitude, null, {'label_attr': {'class': 'inline-label'}}) }}
+            {{ form_widget(form.longitude, {'attr': {'class': 'input-small'}}) }}
+
+            {{ form_rest(form) }}
+        </div>
+    </div>
+{% endspaceless %}
+{% endblock %}
+
+{% block form_errors %}
+{% spaceless %}
+    {% if errors|length > 0 %}
+    <ul class="alert alert-error">
+        {% for error in errors %}
+            <li>{{ error.message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+{% endspaceless %}
+{% endblock form_errors %}

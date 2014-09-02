@@ -1,0 +1,85 @@
+{% set section = 'comments' %}
+
+{% extends 'DatathekeFrontendBundle:Library:library.html.twig' %}
+
+{% import 'DatathekePagerBundle:Pager:bootstrap3.html.twig' as m_pager %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+
+        jQuery(document).ready(function() {
+
+            initLibrary();
+        });
+    </script>
+{% endblock %}
+
+{% block section %}
+
+    <form action="{{ pager_form_path(pager) }}" method="post">
+        <div class="pull-left">
+            {{ '%number% comment(s)'|trans({'%number%': pager.totalItemCount}) }}
+        </div>
+
+        <div style="clear: both;"></div>
+
+        {% if pager.totalItemCount %}
+
+            <div>
+                {% for comment in pager.items %}
+                    <div class="dt-code-sample" style="padding-bottom: 20px;">
+                        <div>
+                            <strong>{{ comment.title }}</strong>
+                            <div class="pull-right">
+                                <a href="{{ path('account', {'username': comment.owner.username}) }}">
+                                    {{ comment.owner.username }}
+                                </a>
+                                /
+                                {{ comment.createdAt|date('d/m/Y') }}
+                            </div>
+                        </div>
+
+                        <div style="padding: 10px; border-top: 1px solid #e3e3e3; margin-top: 10px; overflow: auto; max-height: 150px;">
+                            {{ comment.body|nl2br }}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div style="clear: both;"></div>
+
+            {{ m_pager.paginate(pager) }}
+
+        {% endif %}
+    </form>
+
+    {% if form %}
+        <form {{ form_enctype(form) }} method="post" action="{{ path('library_comments', {id: library.id}) }}">
+            <fieldset>
+                <legend>{{ "Add comment"|trans }}</legend>
+
+                <div class="form-group">
+                    {{ form_row(form.title, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_row(form.body, {'attr': {'class': 'form-control'}}) }}
+                </div>
+
+                {{ form_rest(form) }}
+
+                <button type="submit" class="btn btn-primary">{{ "Save"|trans }}</button>
+            </fieldset>
+        </form>
+
+    {% else %}
+        <div class="alert alert-info">
+            <span class="badge badge-info">!</span>
+            {{ "You must sign in to comment this library"|trans }}
+        </div>
+    {% endif %}
+
+{% endblock %}

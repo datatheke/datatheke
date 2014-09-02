@@ -1,0 +1,26 @@
+{
+  "name": "putsch",
+  "version": "0.1.0",
+  "homepage": "https://github.com/iamluc/putsch",
+  "authors": [
+    "iamluc <luc@vieillescazes.net>"
+  ],
+  "description": "Putsch is a simple jQuery plugin to load remote content and synchronize URL using pushState",
+  "main": "jquery.putsch.js",
+  "keywords": [
+    "ajax",
+    "pushState",
+    "History"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": ">=1.9"
+  }
+}

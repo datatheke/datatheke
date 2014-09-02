@@ -1,0 +1,9 @@
+parameters:
+    datatheke.listener.locale.class: Datatheke\Bundle\FrontendBundle\EventListener\LocaleListener
+
+services:
+    datatheke.listener.locale:
+        class: %datatheke.listener.locale.class%
+        arguments: ["%kernel.default_locale%"]
+        tags:
+            - { name: kernel.event_subscriber }

@@ -1,0 +1,47 @@
+{% extends 'DatathekeFrontendBundle::layout.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('bundles/datathekefrontend/vendor/putsch/jquery.putsch.js') }}" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            $('.nav-tabs').putsch({type: 'bootstrap-tab', loader: datathekeLoader});
+            viewReady('#tab-search', loadView);
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+
+    {# HEADER #}
+
+    <ul class="breadcrumb">
+        <li class="active">
+            <span class="glyphicon glyphicon-search"></span>
+            <a href="{{ path('search') }}"> {{ "Search"|trans }}</a>
+        </li>
+    </ul>
+
+    {# TABS #}
+
+    <ul class="nav nav-tabs">
+        <li class="active">
+            <a href="#" data-target="#tab-search" data-toggle="tab">
+                {{ "Results"|trans }}
+            </a>
+        </li>
+
+        <li class="pull-right">
+            <img src="{{ asset('bundles/datathekefrontend/img/spinner.gif') }}" class="hide tab-spinner" />
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane active" id="tab-search">
+            <div class="row-fluid">{{ block('tab') }}</div>
+        </div>
+    </div>
+
+{% endblock %}

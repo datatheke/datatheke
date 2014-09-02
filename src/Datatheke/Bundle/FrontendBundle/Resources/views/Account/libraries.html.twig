@@ -1,0 +1,23 @@
+{% set isAccountOwner = (account is defined and is_granted('ROLE_USER') and account.username == app.user.username) %}
+{% set category = category|default('account') %}
+
+{% decorate 'xmlhttprequest' with {'_template': 'DatathekeFrontendBundle:Account:layout.html.twig'} %}
+
+{% block tab %}
+
+    {% embed 'DatathekeFrontendBundle:Mutual:libraries_list.html.twig' %}
+        {% block no_result %}
+            <i>{{ "No library"|trans }}</i>
+            <span class="badge badge-warning">!</span>
+
+            {% if category == 'account' and isAccountOwner %}
+                <div class="alert alert-info" style="margin-top: 20px;">
+                    <span class="label label-info">{{ "Information"|trans }}</span>
+                    <br /><br />
+                    {{ "To create your first library, click on the button above"|trans }}
+                </div>
+            {% endif %}
+        {% endblock %}
+    {% endembed %}
+
+{% endblock %}

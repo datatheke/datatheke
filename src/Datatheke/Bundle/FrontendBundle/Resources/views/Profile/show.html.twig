@@ -1,0 +1,11 @@
+
+{% extends 'DatathekeFrontendBundle:Profile:profile.html.twig' %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block section %}
+    <div class="fos_user_user_show" style="margin-bottom: 50px;">
+        <p>{{ 'profile.show.username'|trans }}: {{ user.username }}</p>
+        <p>{{ 'profile.show.email'|trans }}: {{ user.email }}</p>
+    </div>
+{% endblock section %}

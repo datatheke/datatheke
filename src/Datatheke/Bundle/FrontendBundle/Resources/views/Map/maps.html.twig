@@ -1,0 +1,70 @@
+{% set section = 'maps' %}
+
+{% extends 'DatathekeFrontendBundle:Library:library.html.twig' %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {# OpenLayers #}
+    <script src="{{ asset('bundles/datathekefrontend/vendor/openlayers/lib/OpenLayers.js') }}" type="text/javascript"></script>
+
+    <script type="text/javascript">
+
+        jQuery(document).ready(function() {
+
+            initLibrary();
+            bindTabs({'event': 'shown'});
+
+            {% if activeMap and activeMap.id %}
+                createMap("{{ path('map_markers', {id: activeMap.id}) }}", '#map-{{ activeMap.id }}');
+            {% endif %}
+        });
+    </script>
+{% endblock %}
+
+
+{% block section %}
+    <ul class="nav nav-tabs">
+        {% if maps|length %}
+            {% for map in maps %}
+                <li {% if map.id == activeMap.id %}class="active"{% endif %}>
+                    <a href="{{ path('map_markers', {'id': map.id}) }}" data-target="#map-{{ map.id }}" data-toggle="tab" data-loader="custom" data-loader-custom="createMap">
+                        {{ m_lib.collection_image(map, '16') }}
+                        {{ map.name }}
+                    </a>
+                </li>
+            {% endfor %}
+        {% else %}
+            <li class="active">
+                <a href="#" class="active" data-target="#tab-no-map" data-toggle="tab" data-loader="static">
+                    {{ "No map"|trans }}
+                </a>
+            </li>
+        {% endif %}
+
+        <li class="pull-right">
+            <img src="{{ asset('bundles/datathekefrontend/img/spinner.gif') }}" class="hide tab-spinner" />
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        {% if maps|length %}
+            {% for map in maps %}
+                <div class="tab-pane{% if map.id == activeMap.id %} active{% endif %}" id="map-{{ map.id }}" style="width: 100%; height: 500px;">
+                </div>
+            {% endfor %}
+            © Les contributeurs d’OpenStreetMap
+        {% else %}
+            <div class="tab-pane active alert alert-info" id="tab-no-map">
+                <span class="badge badge-info">!</span>
+                {{ "There is no collection with 'Longitude / Latitude' field"|trans }}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
