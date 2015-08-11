@@ -6,7 +6,8 @@
 /app/logs/*
 /build/
 /vendor/
-/bin/
+/bin/*
+!bin/build-image.sh
 /composer.phar
 .idea/
 *.sublime-*
