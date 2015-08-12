@@ -7,7 +7,7 @@
 /build/
 /vendor/
 /bin/*
-!bin/build-image.sh
+!bin/build-docker-image.sh
 /composer.phar
 .idea/
 *.sublime-*

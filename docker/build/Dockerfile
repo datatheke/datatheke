@@ -19,4 +19,6 @@ WORKDIR /var/www/datatheke
 
 VOLUME ['/var/www/datatheke/app/cache', '/var/www/datatheke/app/logs', '/var/www/datatheke/web/uploads']
 
+EXPOSE 80
+
 CMD ["/usr/local/bin/run.sh"]
