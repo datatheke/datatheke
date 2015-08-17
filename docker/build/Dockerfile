@@ -13,11 +13,12 @@ RUN ln -sf /var/www/datatheke/docker/build/vhost.conf /etc/apache2/sites-enabled
     && chown -R www-data:www-data /var/www/datatheke/app/cache /var/www/datatheke/app/logs
 
 ENV SYMFONY__MONGODB_SERVER "mongodb://mongodb"
-ENV SYMFONY__STORAGE_PATH "/var/www/datatheke/web/uploads"
+ENV SYMFONY__UPLOAD_PATH "/var/www/datatheke/web/uploads"
+ENV SYMFONY__IMPORT_PATH "/tmp/datatheke"
 
 WORKDIR /var/www/datatheke
 
-VOLUME ['/var/www/datatheke/app/cache', '/var/www/datatheke/app/logs', '/var/www/datatheke/web/uploads']
+VOLUME ['/var/www/datatheke/app/cache', '/var/www/datatheke/app/logs', '/var/www/datatheke/web/uploads', '/tmp/datatheke']
 
 EXPOSE 80
 

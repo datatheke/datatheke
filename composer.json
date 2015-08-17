@@ -74,7 +74,8 @@
             "file": "app/config/parameters.yml",
             "env-map": {
                 "mongodb_server": "SYMFONY__MONGODB_SERVER",
-                "storage_path": "SYMFONY__STORAGE_PATH"
+                "upload_path": "SYMFONY__UPLOAD_PATH",
+                "import_path": "SYMFONY__IMPORT_PATH"
             }
         },
         "branch-alias": {
