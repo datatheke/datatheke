@@ -2,15 +2,17 @@
 
 namespace Datatheke\Bundle\ApiBundle\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Datatheke\Bundle\ApiBundle\Tests\DatathekeWebTestCase;
 
-class LibraryControllerTest extends WebTestCase
+class LibraryControllerTest extends DatathekeWebTestCase
 {
     protected $client;
     protected $token;
 
     public function setUp()
     {
+        parent::setUp();
+
         $this->client = static::createClient();
         $crawler = $this->client->request('POST', '/api/v1/token', array(), array(), array(
             'PHP_AUTH_USER' => 'test',

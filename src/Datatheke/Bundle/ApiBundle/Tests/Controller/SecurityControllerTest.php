@@ -2,10 +2,15 @@
 
 namespace Datatheke\Bundle\ApiBundle\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Datatheke\Bundle\ApiBundle\Tests\DatathekeWebTestCase;
 
-class SecurityControllerTest extends WebTestCase
+class SecurityControllerTest extends DatathekeWebTestCase
 {
+    public function setUp()
+    {
+        parent::setUp();
+    }
+
     public function testGetToken()
     {
         $client = static::createClient();
