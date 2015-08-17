@@ -44,7 +44,7 @@ class ItemManager
     public function delete(Collection $collection, $id)
     {
         $item = $this->find($collection, $id);
-        $item->setDeleted(true);
+        $item->deleted = true;
         $this->save($item);
 
         return $this;
